@@ -31,7 +31,6 @@
         </div>
     </nav>
 
-    <!-- отступ сверху mt -->
     <main class="container mt-3">
         <div class="row">
             <section class="col vh-100">
@@ -39,124 +38,42 @@
                     <h1>New Question</h1>
                 </div>
                 
-
-
-
-                <form class="needs-validation" novalidate>
-                    <div class="mb-3">
-                        <label for="questionTitle" class="form-label">Title</label>
-                        <input type="text" 
-                               class="form-control" 
-                               id="questionTitle" 
-                               placeholder="How to...?" 
-                               maxlength="200"
-                               required>
-                        <div class="invalid-feedback">
-                            Please provide a question title (max 200 characters).
-                        </div>
-                        <div class="valid-feedback">
-                            Looks good!
+                <form id="questionForm" class="d-flex gap-3 flex-column me-2" novalidate>
+                    <div class="title row">
+                        <p class="col-1 d-flex align-items-center mb-4">Title</p>
+                        <div class="col-11">
+                            <input type="text" class="form-control" id="questionTitle" 
+                                   placeholder="How to ..?" maxlength="200" required>
+                            <div id="titleError" class="error-message"></div>
                         </div>
                     </div>
-                
-                    <!-- Поле текста вопроса -->
-                    <div class="mb-3">
-                        <label for="questionText" class="form-label">Question</label>
-                        <textarea class="form-control" 
-                                  id="questionText" 
-                                  rows="7"
-                                  maxlength="2000"
-                                  placeholder="Describe your question in details..."
-                                  required></textarea>
-                        <div class="invalid-feedback">
-                            Please provide question details (max 2000 characters).
-                        </div>
-                        <div class="form-text">
-                            Be specific and imagine you're asking a question to another person.
+                    
+                    <div class="question row">
+                        <p class="col-1 d-flex align-items-center mb-4">Text</p>
+                        <div class="col-11">
+                            <textarea class="form-control" id="questionText" rows="7"
+                                   placeholder="I do not know how. Please, help."
+                                   maxlength="2000" required></textarea>
+                            <div id="questionError" class="error-message"></div>
                         </div>
                     </div>
-                
-                    <!-- Поле тегов -->
-                    <div class="mb-3">
-                        <label for="questionTags" class="form-label">Tags</label>
-                        <input type="text" 
-                               class="form-control" 
-                               id="questionTags" 
-                               placeholder="javascript python django"
-                               maxlength="100">
-                        <div class="form-text">
-                            Add up to 3 tags separated by spaces (max 20 chars each).
-                        </div>
-                        <div class="invalid-feedback">
-                            Each tag must be 2-20 characters long.
+                    
+                    <div class="tags row">
+                        <p class="col-1 d-flex align-items-center mb-4">Tags</p>
+                        <div class="col-11">
+                            <input type="text" class="form-control" id="questionTags" 
+                                   placeholder="javascript python django" maxlength="100">
+                            <div id="tagsError" class="error-message"></div>
                         </div>
                     </div>
-                
-                    <!-- Кнопка отправки -->
-                    <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                        <button class="btn btn-primary px-4" type="submit">Post Question</button>
-                    </div>
-                
-                    <!-- Блок для общих ошибок формы -->
-                    <div class="alert alert-danger d-none mt-3" id="formErrors">
-                        <strong>Please fix these errors:</strong>
-                        <ul class="mb-0" id="errorList"></ul>
+                    
+                    <div class="row">
+                        <div class="col-11 offset-1">
+                            <button type="submit" class="btn text-white" style="background-color: #18881a">ASK!</button>
+                        </div>
                     </div>
                 </form>
-                
-                <script>
-                // Валидация формы
-                (function() {
-                    'use strict';
-                    const form = document.querySelector('.needs-validation');
-                    
-                    form.addEventListener('submit', function(event) {
-                        event.preventDefault();
-                        event.stopPropagation();
-                        
-                        // Проверка валидности
-                        if (form.checkValidity()) {
-                            // Дополнительная проверка тегов
-                            const tagsInput = document.getElementById('questionTags');
-                            const tags = tagsInput.value.trim().split(/\s+/).filter(tag => tag);
-                            
-                            if (tags.length > 3) {
-                                showError('Maximum 3 tags allowed');
-                                return;
-                            }
-                            
-                            for (const tag of tags) {
-                                if (tag.length < 2 || tag.length > 20) {
-                                    showError(`Tag "${tag}" must be 2-20 characters long`);
-                                    return;
-                                }
-                            }
-                            
-                            // Если все ок - можно отправлять
-                            alert('Form is valid! Would be submitted in real app.');
-                        } else {
-                            showError('Please fill all required fields correctly');
-                        }
-                        
-                        form.classList.add('was-validated');
-                    }, false);
-                    
-                    function showError(message) {
-                        const errorDiv = document.getElementById('formErrors');
-                        const errorList = document.getElementById('errorList');
-                        
-                        errorList.innerHTML = `<li>${message}</li>`;
-                        errorDiv.classList.remove('d-none');
-                    }
-                })();
-                </script>
 
-
-
-
-
-
-                
             </section>
 
 
@@ -192,6 +109,37 @@
     </main>
 
     <script src="static/js/bootstrap.bundle.js"></script>
+    <script>
+        document.getElementById('questionForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            let isValid = true;
+            
+            document.querySelectorAll('.error-message').forEach(el => el.textContent = '');
+            document.querySelectorAll('.is-invalid').forEach(el => el.classList.remove('is-invalid'));
+    
+            const titleField = document.getElementById('questionTitle');
+            if (titleField.value.length < 10) {
+                const errorElement = document.getElementById('titleError');
+                errorElement.textContent = 'Title must be at least 10 characters';
+                errorElement.style.color = 'red';
+                titleField.classList.add('is-invalid');
+                isValid = false;
+            }
+            
+            const questionField = document.getElementById('questionText');
+            if (questionField.value.length < 20) {
+                const errorElement = document.getElementById('questionError');
+                errorElement.textContent = 'Text must be at least 20 characters';
+                errorElement.style.color = 'red';
+                questionField.classList.add('is-invalid');
+                isValid = false;
+            }
+            
+            if (isValid) {
+                this.reset();
+            }
+        });
+    </script>
 </body>
 
 </html>
