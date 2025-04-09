@@ -1,12 +1,12 @@
 <!doctype html>
 <html lang="en">
 
-  <head>
+<head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Ask question</title>
-    <link href="static/css/bootstrap.css" rel="stylesheet"/>
-  </head>
+    <link href="static/css/bootstrap.css" rel="stylesheet" />
+</head>
 
 <body>
     <nav class="navbar navbar-expand-lg bg-body-secondary">
@@ -20,7 +20,7 @@
 
 
             <div class="user-block">
-             
+
                 <div class="links d-flex align-items-center gap-5">
                     <a href="#">Log in</a>
                     <a href="#">Register</a>
@@ -37,36 +37,35 @@
                 <div class="d-flex align-items-center mb-4">
                     <h1>New Question</h1>
                 </div>
-                
+
                 <form id="questionForm" class="d-flex gap-3 flex-column me-2" novalidate>
                     <div class="title row">
                         <p class="col-1 d-flex align-items-center mb-4">Title</p>
                         <div class="col-11">
-                            <input type="text" class="form-control" id="questionTitle" 
-                                   placeholder="How to ..?" maxlength="200" required>
+                            <input type="text" class="form-control" id="questionTitle" placeholder="How to ..?"
+                                maxlength="200" required>
                             <div id="titleError" class="error-message"></div>
                         </div>
                     </div>
-                    
+
                     <div class="question row">
                         <p class="col-1 d-flex align-items-center mb-4">Text</p>
                         <div class="col-11">
                             <textarea class="form-control" id="questionText" rows="7"
-                                   placeholder="I do not know how. Please, help."
-                                   maxlength="2000" required></textarea>
+                                placeholder="I do not know how. Please, help." maxlength="2000" required></textarea>
                             <div id="questionError" class="error-message"></div>
                         </div>
                     </div>
-                    
+
                     <div class="tags row">
                         <p class="col-1 d-flex align-items-center mb-4">Tags</p>
                         <div class="col-11">
-                            <input type="text" class="form-control" id="questionTags" 
-                                   placeholder="javascript python django" maxlength="100">
+                            <input type="text" class="form-control" id="questionTags"
+                                placeholder="javascript python django" maxlength="100">
                             <div id="tagsError" class="error-message"></div>
                         </div>
                     </div>
-                    
+
                     <div class="row">
                         <div class="col-11 offset-1">
                             <button type="submit" class="btn text-white" style="background-color: #18881a">ASK!</button>
@@ -105,18 +104,18 @@
                 </section>
             </aside>
         </div>
-        
+
     </main>
 
     <script src="static/js/bootstrap.bundle.js"></script>
     <script>
-        document.getElementById('questionForm').addEventListener('submit', function(event) {
+        document.getElementById('questionForm').addEventListener('submit', function (event) {
             event.preventDefault();
             let isValid = true;
-            
+
             document.querySelectorAll('.error-message').forEach(el => el.textContent = '');
             document.querySelectorAll('.is-invalid').forEach(el => el.classList.remove('is-invalid'));
-    
+
             const titleField = document.getElementById('questionTitle');
             if (titleField.value.length < 10) {
                 const errorElement = document.getElementById('titleError');
@@ -125,7 +124,7 @@
                 titleField.classList.add('is-invalid');
                 isValid = false;
             }
-            
+
             const questionField = document.getElementById('questionText');
             if (questionField.value.length < 20) {
                 const errorElement = document.getElementById('questionError');
@@ -134,7 +133,7 @@
                 questionField.classList.add('is-invalid');
                 isValid = false;
             }
-            
+
             if (isValid) {
                 this.reset();
             }
