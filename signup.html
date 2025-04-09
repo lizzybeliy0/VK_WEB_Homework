@@ -1,0 +1,188 @@
+<!doctype html>
+<html lang="en">
+
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Sign Up</title>
+    <link href="static/css/bootstrap.css" rel="stylesheet"/>
+  </head>
+
+<body>
+    <nav class="navbar navbar-expand-lg bg-body-secondary">
+        <div class="container">
+            <a class="navbar-brand" href="#">ReRe</a>
+
+            <form class="d-flex" role="search">
+                <input class="form-control me-5" type="search" placeholder="Search" aria-label="Search">
+                <button class="btn text-white" style="background-color: #18881a" type="submit">Ask!</button>
+            </form>
+
+            <div class="user-block">
+                    <div class="links d-flex align-items-center gap-5">
+                        <a href="#">Log in</a>
+                        <a href="#">Register</a>
+                    </div>
+            </div>
+        </div>
+    </nav>
+
+    <main class="container mt-3">
+        <div class="row">
+            <section class="col vh-100">
+                <div class="d-flex align-items-center mb-4">  
+                    <h1>Registration</h1>
+                </div>
+                
+                <form id="loginForm" class="d-flex gap-3 flex-column me-2" novalidate>
+
+                    <div class="login row">
+                        <p class="col-2 d-flex align-items-center mb-4">Login</p>
+                        <div class="col-10">
+                            <input type="text" class="form-control" id="loginField" 
+                            placeholder="dr_pepper" maxlength="30">
+                            <div id="loginError" class="error-message"></div>
+                        </div>
+                    </div>
+
+                    <div class="email row">
+                        <p class="col-2 d-flex align-items-center mb-4">Email</p>
+                        <div class="col-10">
+                            <input type="text" class="form-control" id="emailField"
+                            placeholder="drpepper@mail.ru">
+                            <div id="emailError" class="error-message"></div>
+                        </div>
+                    </div>
+
+                    <div class="nickName row">
+                        <p class="col-2 d-flex align-items-center mb-4">NickName</p>
+                        <div class="col-10">
+                            <input type="text" class="form-control" id="nickNameField" maxlength="50"
+                            placeholder="Dr. Pepper">
+                        </div>
+                    </div>
+                    
+                    <div class="password row">
+                        <p class="col-2 d-flex align-items-center mb-4">Password</p>
+                        <div class="col-10">
+                            <input type="password" class="form-control" id="passwordField" 
+                            placeholder="********" maxlength="15">
+                            <div id="passwordError" class="error-message"></div>
+                        </div>
+                    </div>
+
+                    <div class="repeat-Password row">
+                        <p class="col-2 d-flex align-items-center mb-4">Repeat Password</p>
+                        <div class="col-10">
+                            <input type="password" class="form-control" id="repeat-PasswordField"
+                            placeholder="********" maxlength="15">
+                            <div id="repeat-PasswordError" class="error-message"></div>
+                        </div>
+                    </div>
+
+                    <div class="avatar row">
+                        <p class="col-2 d-flex align-items-center mb-4">Upload avatar</p>
+                        <div class="col-5">
+                            <input type="text" class="form-control" placeholder="Input path" readonly>
+                        </div>
+                        <div class="col-5">
+                            <label for="avatarInput" class="btn text-white" style="background-color: #18881a">choose</label>
+                            <input type="file" id="avatarInput" accept="image/*">
+                        </div>
+                    </div>
+                    
+                    <div class="row">
+                        <div class="col-10 offset-2">
+                            <button type="submit" class="btn text-white" style="background-color: #18881a">Register!</button>
+                        </div>
+                    </div>
+                </form>
+
+
+            </section>
+
+
+            <aside class="col-3">
+                <section class="mb-3">
+                    <h3>Popular tags</h3>
+                    <div>
+                        <span class="badge rounded-pill text-bg-primary">Primary</span>
+                        <span class="badge rounded-pill text-bg-secondary">Secondary</span>
+                        <span class="badge rounded-pill text-bg-success">Success</span>
+                        <span class="badge rounded-pill text-bg-danger">Danger</span>
+                        <span class="badge rounded-pill text-bg-warning">Warning</span>
+                        <span class="badge rounded-pill text-bg-info">Info</span>
+                        <span class="badge rounded-pill text-bg-light">Light</span>
+                        <span class="badge rounded-pill text-bg-dark">Dark</span>
+                    </div>
+                </section>
+
+                <section>
+                    <h3>Best members</h3>
+                    <div>
+                        <a class="d-block" href="#">Member</a>
+                        <a class="d-block" href="#">Member</a>
+                        <a class="d-block" href="#">Member</a>
+                        <a class="d-block" href="#">Member</a>
+                        <a class="d-block" href="#">Member</a>
+                        <a class="d-block" href="#">Member</a>
+                    </div>
+                </section>
+            </aside>
+        </div>
+        
+    </main>
+
+    <script src="static/js/bootstrap.bundle.js"></script>
+    <script>
+        document.getElementById('loginForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            let isValid = true;
+            
+            document.querySelectorAll('.error-message').forEach(el => el.textContent = '');
+            document.querySelectorAll('.is-invalid').forEach(el => el.classList.remove('is-invalid'));
+    
+            const loginField = document.getElementById('loginField');
+            if (loginField.value.length < 3) {
+                const errorElement = document.getElementById('loginError');
+                errorElement.textContent = 'Login must be at least 3 character';
+                errorElement.style.color = 'red';
+                loginField.classList.add('is-invalid');
+                isValid = false;
+            }
+
+            const emailField = document.getElementById('emailField');
+            if (!emailField.value.includes('@')) {
+                const errorElement = document.getElementById('emailError');
+                errorElement.textContent = 'Email must contain @ symbol';
+                errorElement.style.color = 'red';
+                emailField.classList.add('is-invalid');
+                isValid = false;
+            }
+            
+            const passwordField = document.getElementById('passwordField');
+            if (passwordField.value.length < 8) {
+                const errorElement = document.getElementById('passwordError');
+                errorElement.textContent = 'Password must be at least 8 characters';
+                errorElement.style.color = 'red';
+                passwordField.classList.add('is-invalid');
+                isValid = false;
+            }
+
+            const repeatPasswordField = document.getElementById('repeat-PasswordField');
+            if (passwordField.value !== repeatPasswordField.value) {
+                const errorElement = document.getElementById('repeat-PasswordError');
+                errorElement.textContent = 'Passwords do not match';
+                errorElement.style.color = 'red';
+                repeatPasswordField.classList.add('is-invalid');
+                isValid = false;
+            }
+            
+            if (isValid) {
+                this.reset();
+            }
+        });
+    </script>
+</body>
+
+</html>
